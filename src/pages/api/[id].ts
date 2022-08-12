@@ -28,16 +28,16 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
       id: `${req.query.id}`,
     },
     select: {
-        id: true,
-        datePublished: true,
-        lastEdited: true,
-        content: true
-    }
+      id: true,
+      datePublished: true,
+      lastEdited: true,
+      content: true,
+    },
   });
 
-  if (!entry) return res.status(404).end("Entry not found.")
+  if (!entry) return res.status(404).end('Entry not found.');
 
-  console.table(entry)
+  console.table(entry);
 
   return res.status(200).json(entry);
 }

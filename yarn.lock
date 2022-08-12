@@ -205,10 +205,10 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@charted/prettier-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@charted/prettier-config/-/prettier-config-1.0.0.tgz#d033e44e4f83e8283ca0bf4075027203ac1f2259"
-  integrity sha512-I3cgKakZ/OYJBX6Begk92PNTLvbg4csCdCs/cZSeyt5faj2JJxOWdNVvI6lOKB+nFszvoOIeBICL9+bTCQRH/w==
+"@charted/prettier-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@charted/prettier-config/-/prettier-config-1.0.1.tgz#b0344f23d0fca6c9f15f31a5a373e3804ae59f65"
+  integrity sha512-NNat/6YcVu2PnnH40JsLoHQ74r3NJDvNYCjOEkV0gCjzeSzugfDhj0VQiMZ5GrzLTRZoCAI4PYaKSrRP6xu66A==
 
 "@emotion/is-prop-valid@^1.1.0":
   version "1.1.3"
@@ -2775,11 +2775,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
-
-xid-js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/xid-js/-/xid-js-1.0.1.tgz#d9f59c3eb192c24b38dbdcd8a3bad77525d1b8bc"
-  integrity sha512-l+rmscve/to4bbA35eOXvcSmmbLJuKOHIplc2Yz7r1drsGm7+VoCs8ahb/9weMyNkPd8xPF5HAH6surmElBTuA==
 
 xtend@^4.0.2:
   version "4.0.2"

@@ -1,1 +1,1 @@
-module.exports = require('@charted/prettier-config')
+module.exports = require('@charted/prettier-config');
