@@ -33,11 +33,3 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
 
   return res.status(200).json(entry);
 }
-
-function handlePATCH(req: NextApiRequest, res: NextApiResponse<any>) {
-  throw new Error('Function not implemented.');
-}
-
-function handleDELETE(req: NextApiRequest, res: NextApiResponse<any>) {
-  throw new Error('Function not implemented.');
-}
