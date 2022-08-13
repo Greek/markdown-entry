@@ -1,10 +1,8 @@
 import { NextPageContext } from 'next';
-import { ViewPage } from '../modules/ViewPage';
+import { EditPage } from '../../modules/EditPage';
 
 export const getServerSideProps = async (context: NextPageContext) => {
-  const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/${context.query.id}`
-  );
+  const res = await fetch(`http://localhost:3000/api/${context.query.id}`);
   const entry = await res.json();
 
   if (entry.error) {
@@ -18,4 +16,4 @@ export const getServerSideProps = async (context: NextPageContext) => {
   };
 };
 
-export default ViewPage;
+export default EditPage;
