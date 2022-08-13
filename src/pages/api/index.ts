@@ -12,7 +12,7 @@ export default async function submit(
   const csrfToken = await getCsrfToken({ req });
 
   if (process.env.NODE_ENV == 'production') {
-    if (!req.headers.referer?.includes('https://apap04.com'))
+    if (!req.headers.referer?.includes('https://mentry.apap04.com/'))
       return res
         .status(403)
         .end(
