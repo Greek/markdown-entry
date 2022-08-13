@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import useSWR from 'swr';
-import fetcher from '../lib/fetcher';
+import React from 'react';
+import Head from 'next/head';
 
 import ReactMarkdown from 'react-markdown';
 
@@ -13,32 +13,18 @@ import remarkEmoji from 'remark-emoji';
 import remarkRehype from 'remark-rehype';
 
 import { CenterLayout } from '../ui/layouts/CenterLayout';
-import { useRouter } from 'next/router';
-import { Entry } from '@prisma/client';
-import { AxiosError } from 'axios';
-import React from 'react';
-import Head from 'next/head';
+import { NextPageContext } from 'next';
 
-export default function Id() {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const { data, error }: { data?: Entry; error?: AxiosError } = useSWR(
-    `/api/${id}`,
-    fetcher,
-    { refreshInterval: 0, revalidateOnFocus: false }
-  );
-
+export default function Id({ ...props }) {
   return (
     <CenterLayout>
       <Head>
-        <title>Hey {data?.id}</title>
+        <title>Hey</title>
       </Head>
       <div className={`flex flex-col py-4 px-2 bg-button-bg text-color-text`}>
-        {!data && !error && <h1> Loading ... </h1>}
-        {data && (
+        {props.entry && (
           <ReactMarkdown
-            children={data?.content}
+            children={props.entry.content}
             remarkPlugins={[
               remarkGfm,
               remarkEmoji,
@@ -49,17 +35,22 @@ export default function Id() {
             ]}
           />
         )}
-        {error &&
-          ((
-            <p>{`${error.response?.status} ${error.response?.data}`}</p>
-          ) as React.ReactNode)}
       </div>
     </CenterLayout>
   );
 }
 
-// export const getServerSideProps = async (context: NextPageContext) => {
-//   return {
-//     props: {},
-//   };
-// };
+export const getServerSideProps = async (context: NextPageContext) => {
+  const res = await fetch(`http://localhost:3000/api/${context.query.id}`);
+  const entry = await res.json();
+
+  if (entry.error) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { entry },
+  };
+};

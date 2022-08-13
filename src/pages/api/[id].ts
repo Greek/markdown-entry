@@ -29,7 +29,7 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-  if (!entry) return res.status(404).end('Entry not found.');
+  if (!entry) return res.status(404).json({ error: 'Entry not found.' });
 
   return res.status(200).json(entry);
 }
