@@ -29,5 +29,13 @@
     "html/xml-extensions": [".html"],
     "html/indent": "+2"
   },
-  "rules": {}
+  "rules": {},
+  "overrides": [
+    {
+      "files": "./**/*.tsx",
+      "rules": {
+        "react/no-children-prop": "off"
+      }
+    }
+  ]
 }

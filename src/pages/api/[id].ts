@@ -11,14 +11,8 @@ export default async function submit(
   switch (method) {
     case 'GET':
       return handleGET(req, res);
-    case 'PATCH':
-      return handlePATCH(req, res);
-    case 'DELETE':
-      return handleDELETE(req, res);
     default:
-      return res
-        .status(405)
-        .end('Only GET, PATCH and DELETE methods are allowed.');
+      return res.status(405).end('Only GET requests are allowed.');
   }
 }
 
@@ -36,8 +30,6 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   });
 
   if (!entry) return res.status(404).end('Entry not found.');
-
-  console.table(entry);
 
   return res.status(200).json(entry);
 }

@@ -10,6 +10,7 @@ export default function Home() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Referer: 'https://apap04.com',
       },
 
       body: JSON.stringify({
