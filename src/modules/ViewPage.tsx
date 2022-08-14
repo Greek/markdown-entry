@@ -21,7 +21,7 @@ export const ViewPage = ({ ...props }) => {
   const { c: editCode } = router.query;
 
   return (
-    <div className={`flex flex-col mx-96 pt-3 h-96`}>
+    <div className={`flex flex-col mx-auto pt-3 container`}>
       <Head>
         <title>{props.entry.content.substring(0, 10)}</title>
       </Head>
