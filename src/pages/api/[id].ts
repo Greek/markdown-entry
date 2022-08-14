@@ -51,6 +51,12 @@ async function handlePATCH(req: NextApiRequest, res: NextApiResponse) {
   if (req.body.editCode !== entryToEdit.editCode)
     return res.status(401).json({ error: 'Incorrect edit code provided' });
 
+  if (!req.body.content)
+    return res.status(401).json({
+      error:
+        "No content was provided. If you'd like to delete your entry, click the Delete button. ",
+    });
+
   const entry = await prisma.entry.update({
     where: {
       id: `${req.query.id}`,
