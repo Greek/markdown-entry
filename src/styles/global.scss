@@ -25,6 +25,10 @@
   a {
     @apply text-blue-600 underline;
   }
+
+  blockquote {
+    @apply border-l-4 border-l-zinc-700 pl-2;
+  }
 }
 
 @tailwind components;
