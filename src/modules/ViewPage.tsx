@@ -12,8 +12,8 @@ import remarkGfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';
 import remarkRehype from 'remark-rehype';
 
-import { CenterLayout } from '../ui/layouts/CenterLayout';
 import { useRouter } from 'next/router';
+import { TextBox } from '../ui/TextBox';
 
 export const ViewPage = ({ ...props }) => {
   const router = useRouter();
@@ -21,12 +21,12 @@ export const ViewPage = ({ ...props }) => {
   const { c: editCode } = router.query;
 
   return (
-    <CenterLayout>
+    <div className={`flex flex-col mx-96 pt-3 h-96`}>
       <Head>
         <title>{props.entry.content.substring(0, 10)}</title>
       </Head>
       {editCode && <p>Your edit code is {editCode}</p>}
-      <div className={`flex flex-col py-4 px-2 bg-button-bg text-color-text`}>
+      <TextBox>
         {props.entry && (
           <ReactMarkdown
             children={props.entry.content}
@@ -40,7 +40,7 @@ export const ViewPage = ({ ...props }) => {
             ]}
           />
         )}
-      </div>
-    </CenterLayout>
+      </TextBox>
+    </div>
   );
 };
