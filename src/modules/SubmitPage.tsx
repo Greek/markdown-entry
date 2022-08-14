@@ -71,7 +71,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
 
   return (
     <>
-      <div className={`flex flex-col mx-96 pt-3`}>
+      <div className={`flex flex-col mx-auto container pt-3`}>
         <textarea
           className={`bg-button-bg text-color-text p-4 mb-2 outline-none h-96`}
           ref={textAreaRef}
