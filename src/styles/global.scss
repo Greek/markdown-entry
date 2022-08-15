@@ -14,20 +14,41 @@
 
 @layer base {
   h1 {
-    @apply text-2xl font-bold;
+    @apply text-2xl font-bold my-2;
   }
   h2 {
-    @apply text-xl font-semibold;
+    @apply text-xl font-semibold my-1;
   }
   h3 {
-    @apply text-lg;
+    @apply text-lg font-semibold my-1;
+  }
+  h4 {
+    @apply font-semibold my-1;
+  }
+  h5 {
+    @apply text-sm font-semibold my-2;
   }
   a {
-    @apply text-blue-600 underline;
+    @apply text-blue-300;
+  }
+
+  p {
+    @apply my-1;
+  }
+
+  hr {
+    @apply border-zinc-600 my-4;
   }
 
   blockquote {
-    @apply border-l-4 border-l-zinc-700 pl-2;
+    @apply border-l-4 border-l-zinc-700 pl-2 text-[#777];
+    & a {
+      @apply text-[#6b90b9];
+    }
+  }
+
+  ul {
+    @apply list-disc my-2 ml-7;
   }
 }
 
