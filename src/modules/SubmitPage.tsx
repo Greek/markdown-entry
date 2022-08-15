@@ -30,12 +30,13 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
         content: textAreaRef?.current?.value as unknown,
       }),
     }).then(async (r) => {
+      const res = await r.json();
+
       if (!r.ok) {
-        setErrorMessage('Please provide content.');
+        setErrorMessage(res.error);
         return;
       }
 
-      const res = await r.json();
       push(`/${res.id}?c=${res.editCode}`, `/${res.id}`);
     });
   };
