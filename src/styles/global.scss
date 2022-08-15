@@ -29,7 +29,7 @@
     @apply text-sm font-semibold my-2;
   }
   a {
-    @apply text-blue-300;
+    @apply text-link;
   }
 
   p {
@@ -80,6 +80,7 @@
   --color-layout-bg: #1b1b1b;
   --color-button-text: #c9d1d9;
   --color-button-bg: #292a2a;
+  --color-link: #879eed;
   --color-text: #999;
   --color-primary-100: #dee3ea;
   --color-primary-200: #b2bdcd;

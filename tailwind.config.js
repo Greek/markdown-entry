@@ -25,6 +25,7 @@ module.exports = {
         'button-bg': 'var(--color-button-bg)',
         'layout-bg': 'var(--color-layout-bg)',
         'color-text': 'var(--color-text)',
+        link: 'var(--color-link)',
       },
     },
   },
