@@ -13,7 +13,7 @@ import remarkEmoji from 'remark-emoji';
 import remarkRehype from 'remark-rehype';
 
 import { useRouter } from 'next/router';
-import { TextBox } from '../ui/TextBox';
+import { TextBox, TextBox2 } from '../ui/TextBox';
 import { MainLayout } from '../ui/layouts/MainLayout';
 
 export const ViewPage = ({ ...props }) => {
@@ -27,7 +27,7 @@ export const ViewPage = ({ ...props }) => {
         <title>{props.entry.content.substring(0, 10)}</title>
       </Head>
       {editCode && <p>Your edit code is {editCode}</p>}
-      <TextBox>
+      <TextBox2>
         {props.entry && (
           <ReactMarkdown
             children={props.entry.content}
@@ -41,7 +41,7 @@ export const ViewPage = ({ ...props }) => {
             ]}
           />
         )}
-      </TextBox>
+      </TextBox2>
     </MainLayout>
   );
 };
