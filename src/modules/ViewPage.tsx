@@ -13,7 +13,7 @@ import remarkEmoji from 'remark-emoji';
 import remarkRehype from 'remark-rehype';
 
 import { useRouter } from 'next/router';
-import { TextBox, TextBox2 } from '../ui/TextBox';
+import { TextBox2 } from '../ui/TextBox';
 import { MainLayout } from '../ui/layouts/MainLayout';
 
 export const ViewPage = ({ ...props }) => {
