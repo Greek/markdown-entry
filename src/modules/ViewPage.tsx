@@ -14,6 +14,7 @@ import remarkRehype from 'remark-rehype';
 
 import { useRouter } from 'next/router';
 import { TextBox } from '../ui/TextBox';
+import { MainLayout } from '../ui/layouts/MainLayout';
 
 export const ViewPage = ({ ...props }) => {
   const router = useRouter();
@@ -21,7 +22,7 @@ export const ViewPage = ({ ...props }) => {
   const { c: editCode } = router.query;
 
   return (
-    <div className={`flex flex-col mx-auto pt-3 container`}>
+    <MainLayout>
       <Head>
         <title>{props.entry.content.substring(0, 10)}</title>
       </Head>
@@ -41,6 +42,6 @@ export const ViewPage = ({ ...props }) => {
           />
         )}
       </TextBox>
-    </div>
+    </MainLayout>
   );
 };

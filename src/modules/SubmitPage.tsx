@@ -1,8 +1,7 @@
-import { CenterLayout } from '../ui/layouts/CenterLayout';
 import { Button } from '../ui/Button';
+import { MainLayout } from '../ui/layouts/MainLayout';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { TextArea } from '../ui/TextArea';
 
 export const SubmitPage = ({ editMode = false, ...props }) => {
   const textAreaRef = useRef(null);
@@ -71,7 +70,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
 
   return (
     <>
-      <div className={`flex flex-col mx-auto container pt-3`}>
+      <MainLayout>
         <textarea
           className={`bg-button-bg text-color-text p-4 mb-2 outline-none h-96`}
           ref={textAreaRef}
@@ -95,7 +94,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
         )}
 
         <p>{errorMessage}</p>
-      </div>
+      </MainLayout>
     </>
   );
 };
