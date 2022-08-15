@@ -82,18 +82,19 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     <>
       <MainLayout>
         {previewArea ? (
-          // <Button
-          //   onClick={() => {
-          //     setPreviewAreaToggle(false);
-          //   }}
-          // >
-          //   Disable editor preview
-          // </Button>
-          <></>
+          <Button
+            onClick={() => {
+              setPreviewAreaToggle(false);
+              setTextEditor(previewAreaContent);
+            }}
+          >
+            Disable editor preview
+          </Button>
         ) : (
           <Button
             onClick={() => {
               setPreviewAreaToggle(true);
+              setTextEditor(previewAreaContent);
             }}
           >
             Enable editor preview
@@ -105,7 +106,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             ref={textAreaRef}
             defaultValue={textEditor}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              if (previewArea) setPreviewAreaContent(e.target.value);
+              setPreviewAreaContent(e.target.value);
             }}
           >
             {props.children}
@@ -123,7 +124,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
               ref={textAreaRef}
               defaultValue={textEditor}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                if (previewArea) setPreviewAreaContent(e.target.value);
+                setPreviewAreaContent(e.target.value);
               }}
             >
               {props.children}
