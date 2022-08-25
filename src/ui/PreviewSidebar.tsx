@@ -4,8 +4,7 @@ import remarkGfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';
 import remarkRehype from 'remark-rehype';
 import ReactMarkdown from 'react-markdown';
-
-import { TextBox } from './TextBox';
+import { TextBox } from './TextElement';
 
 export const PreviewSidebar = ({ ...props }) => {
   return (

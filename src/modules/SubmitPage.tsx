@@ -5,6 +5,7 @@ import { MainLayout } from '../ui/layouts/MainLayout';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PreviewSidebar } from '../ui/PreviewSidebar';
+import { TextArea } from '../ui/TextElement';
 
 export const SubmitPage = ({ editMode = false, ...props }) => {
   const textAreaRef = useRef(null);
@@ -15,7 +16,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
   const [textEditor, setTextEditor] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [previewArea, setPreviewAreaToggle] = useState(false);
-  const [previewAreaContent, setPreviewAreaContent] = useState('');
+  const [previewAreaContent, setPreviewAreaContent] = useState('# h');
 
   useEffect(() => {
     setTextEditor(props.entry?.content);
@@ -36,7 +37,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
       body: JSON.stringify({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        content: textAreaRef?.current?.value as unknown,
+        content: previewAreaContent,
       }),
     }).then(async (r) => {
       const res = await r.json();
@@ -101,8 +102,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
           </Button>
         )}
         {!previewArea && (
-          <StyledTextArea
-            style={{ height: '48rem', outline: 'none' }}
+          <TextArea
             ref={textAreaRef}
             defaultValue={textEditor}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -110,17 +110,12 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             }}
           >
             {props.children}
-          </StyledTextArea>
+          </TextArea>
         )}
         {previewArea && (
           <div className={`flex flex-col md:flex-row`}>
-            <StyledTextArea
-              style={{
-                height: '48rem',
-                outline: 'none',
-                minWidth: '50%',
-                marginRight: '.5rem',
-              }}
+            <TextArea
+              halfWidth
               ref={textAreaRef}
               defaultValue={textEditor}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -128,7 +123,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
               }}
             >
               {props.children}
-            </StyledTextArea>
+            </TextArea>
             <PreviewSidebar>{previewAreaContent}</PreviewSidebar>
           </div>
         )}
