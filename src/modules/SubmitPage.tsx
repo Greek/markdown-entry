@@ -14,7 +14,7 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
   const [textEditor, setTextEditor] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [previewArea, setPreviewAreaToggle] = useState(false);
-  const [previewAreaContent, setPreviewAreaContent] = useState('# h');
+  const [previewAreaContent, setPreviewAreaContent] = useState('');
 
   useEffect(() => {
     setTextEditor(props.entry?.content);
