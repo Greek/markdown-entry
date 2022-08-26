@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "types": "tsc --noEmit",
     "format-all": "prettier --config prettier.config.js --write ./**/*.{ts,tsx,js,jsx}",
     "format": "npx pretty-quick --staged",
     "prepare": "husky install",

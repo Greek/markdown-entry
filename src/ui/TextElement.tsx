@@ -1,9 +1,10 @@
 import { forwardRef } from 'react';
-import { FormEventHandler, MutableRefObject } from 'react';
+import { FormEventHandler } from 'react';
 
 interface TextAreaProps {
   children?: React.ReactNode;
   halfWidth?: boolean;
+  ref?: any;
   value?: string;
   defaultValue?: string;
   onChange?: FormEventHandler;
@@ -18,6 +19,7 @@ export const TextArea: React.FC<TextAreaProps> =
           props.halfWidth ? 'w-3/6 mr-3' : ''
         }`}
         ref={ref}
+        {...props}
       ></textarea>
     );
   });

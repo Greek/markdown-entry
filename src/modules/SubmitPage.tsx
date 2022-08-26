@@ -1,5 +1,3 @@
-import tw from 'tailwind-styled-components';
-
 import { Button } from '../ui/Button';
 import { MainLayout } from '../ui/layouts/MainLayout';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -147,7 +145,3 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     </>
   );
 };
-
-const StyledTextArea = tw.textarea`
-  bg-button-bg text-color-text p-4 mb-2 outline-none;
-`;
