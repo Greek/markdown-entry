@@ -103,7 +103,18 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             </Button>
           )}
         </div>
-        {previewArea && !tutorialArea ? (
+        {!previewArea && !tutorialArea && (
+          <TextArea
+            ref={textAreaRef}
+            defaultValue={textEditor}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setPreviewAreaContent(e.target.value);
+            }}
+          >
+            {props.children}
+          </TextArea>
+        )}
+        {previewArea && !tutorialArea && (
           <div className={`flex flex-col md:flex-row`}>
             <TextArea
               halfWidth
@@ -117,16 +128,18 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             </TextArea>
             <PreviewSidebar>{previewAreaContent}</PreviewSidebar>
           </div>
-        ) : (
-          <TextArea
-            ref={textAreaRef}
-            defaultValue={textEditor}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              setPreviewAreaContent(e.target.value);
-            }}
+        )}
+        {!previewArea && tutorialArea && (
+          <div
+            className={`flex flex-col py-4 px-4 bg-button-bg text-color-text h-[48rem] mb-2 break-words`}
           >
-            {props.children}
-          </TextArea>
+            <h1>Guide coming soon!</h1>
+            <p>
+              {' '}
+              I still need to write a whole guide in markdown. It&apos;s 12am
+              and i&apos;m a little lazy.
+            </p>
+          </div>
         )}
         {editMode && (
           <input
@@ -137,21 +150,23 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             placeholder="Edit code"
           ></input>
         )}
-        {editMode ? (
-          <Button
-            onClick={() =>
-              editNote(
-                previewAreaContent,
-                editCodeTextAreaRef.current?.value!,
-                query
-              )
-            }
-          >
-            Submit edit
-          </Button>
-        ) : (
-          <Button onClick={() => saveNote(previewAreaContent)}>Submit</Button>
-        )}
+        <div className={`float-right`}>
+          {editMode ? (
+            <Button
+              onClick={() =>
+                editNote(
+                  previewAreaContent,
+                  editCodeTextAreaRef.current?.value ?? '',
+                  query
+                )
+              }
+            >
+              Submit edit
+            </Button>
+          ) : (
+            <Button onClick={() => saveNote(previewAreaContent)}>Submit</Button>
+          )}
+        </div>
 
         <p>{errorMessage}</p>
       </MainLayout>
