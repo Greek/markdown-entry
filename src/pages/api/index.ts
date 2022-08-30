@@ -34,7 +34,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   const editCode = nanoid(7);
 
   if (!req.body.content)
-    return res.status(400).end('No content has been provided.');
+    return res.status(400).json({ error: 'No content has been provided.' });
 
   const entry = await prisma.entry.create({
     data: {

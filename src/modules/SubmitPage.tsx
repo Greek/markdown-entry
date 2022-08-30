@@ -4,17 +4,20 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PreviewSidebar } from '../ui/PreviewSidebar';
 import { TextArea } from '../ui/TextElement';
+import { performSaveAction, performEditAction } from '../lib/api';
+import { ParsedUrlQuery } from 'querystring';
 
 export const SubmitPage = ({ editMode = false, ...props }) => {
-  const textAreaRef = useRef(null);
-  const editCodeTextAreaRef = useRef(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const editCodeTextAreaRef = useRef<HTMLInputElement>(null);
 
   const { push, query } = useRouter();
 
   const [textEditor, setTextEditor] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [previewArea, setPreviewAreaToggle] = useState(false);
   const [previewAreaContent, setPreviewAreaContent] = useState('');
+  const [previewArea, setPreviewAreaToggle] = useState(false);
+  const [tutorialArea, setTutorialAreaToggle] = useState(false);
 
   useEffect(() => {
     setTextEditor(props.entry?.content);
@@ -24,20 +27,9 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     setPreviewAreaContent(textEditor);
   }, [textEditor]);
 
-  const performSaveAction = () => {
-    fetch(`/api`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Referer: 'https://mentry.apap04.com/',
-      },
-
-      body: JSON.stringify({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        content: previewAreaContent,
-      }),
-    }).then(async (r) => {
+  const saveNote = (text: string) => {
+    performSaveAction(text).then(async (r) => {
+      // const resultText = await r.text();
       const res = await r.json();
 
       if (!r.ok) {
@@ -49,23 +41,8 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     });
   };
 
-  const performEditAction = () => {
-    fetch(`/api/${query.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Referer: 'https://mentry.apap04.com/',
-      },
-
-      body: JSON.stringify({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        content: textAreaRef?.current?.value as unknown,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        editCode: editCodeTextAreaRef?.current?.value as unknown,
-      }),
-    }).then(async (r) => {
+  const editNote = (text: string, editCode: string, query: ParsedUrlQuery) => {
+    performEditAction(text, editCode, query).then(async (r) => {
       const res = await r.json();
 
       if (!r.ok) {
@@ -80,37 +57,53 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
   return (
     <>
       <MainLayout>
-        {previewArea ? (
-          <Button
-            onClick={() => {
-              setPreviewAreaToggle(false);
-              setTextEditor(previewAreaContent);
-            }}
-          >
-            Disable editor preview
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              setPreviewAreaToggle(true);
-              setTextEditor(previewAreaContent);
-            }}
-          >
-            Enable editor preview
-          </Button>
-        )}
-        {!previewArea && (
-          <TextArea
-            ref={textAreaRef}
-            defaultValue={textEditor}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              setPreviewAreaContent(e.target.value);
-            }}
-          >
-            {props.children}
-          </TextArea>
-        )}
-        {previewArea && (
+        <div>
+          {previewArea ? (
+            <Button
+              onClick={() => {
+                setPreviewAreaToggle(false);
+                setTutorialAreaToggle(false);
+                setTextEditor(previewAreaContent);
+              }}
+            >
+              Preview
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setPreviewAreaToggle(true);
+                setTutorialAreaToggle(false);
+                setTextEditor(previewAreaContent);
+              }}
+              active={false}
+            >
+              Preview
+            </Button>
+          )}
+          {tutorialArea ? (
+            <Button
+              onClick={() => {
+                setTutorialAreaToggle(false);
+                setPreviewAreaToggle(false);
+                setTextEditor(previewAreaContent);
+              }}
+            >
+              Guide
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setTutorialAreaToggle(true);
+                setPreviewAreaToggle(false);
+                setTextEditor(previewAreaContent);
+              }}
+              active={false}
+            >
+              Guide
+            </Button>
+          )}
+        </div>
+        {previewArea && !tutorialArea ? (
           <div className={`flex flex-col md:flex-row`}>
             <TextArea
               halfWidth
@@ -124,6 +117,16 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
             </TextArea>
             <PreviewSidebar>{previewAreaContent}</PreviewSidebar>
           </div>
+        ) : (
+          <TextArea
+            ref={textAreaRef}
+            defaultValue={textEditor}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setPreviewAreaContent(e.target.value);
+            }}
+          >
+            {props.children}
+          </TextArea>
         )}
         {editMode && (
           <input
@@ -135,9 +138,19 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
           ></input>
         )}
         {editMode ? (
-          <Button onClick={performEditAction}>Submit edit</Button>
+          <Button
+            onClick={() =>
+              editNote(
+                previewAreaContent,
+                editCodeTextAreaRef.current?.value!,
+                query
+              )
+            }
+          >
+            Submit edit
+          </Button>
         ) : (
-          <Button onClick={performSaveAction}>Submit</Button>
+          <Button onClick={() => saveNote(previewAreaContent)}>Submit</Button>
         )}
 
         <p>{errorMessage}</p>
