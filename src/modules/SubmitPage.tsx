@@ -7,6 +7,13 @@ import { TextArea } from '../ui/TextElement';
 import { performSaveAction, performEditAction } from '../lib/api';
 import { ParsedUrlQuery } from 'querystring';
 
+import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkEmoji from 'remark-emoji';
+import remarkRehype from 'remark-rehype';
+import ReactMarkdown from 'react-markdown';
+
 export const SubmitPage = ({ editMode = false, ...props }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const editCodeTextAreaRef = useRef<HTMLInputElement>(null);
@@ -27,8 +34,8 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     setPreviewAreaContent(textEditor);
   }, [textEditor]);
 
-  const saveNote = (text: string) => {
-    performSaveAction(text).then(async (r) => {
+  const saveNote = () => {
+    performSaveAction(previewAreaContent).then(async (r) => {
       // const resultText = await r.text();
       const res = await r.json();
 
@@ -41,8 +48,12 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
     });
   };
 
-  const editNote = (text: string, editCode: string, query: ParsedUrlQuery) => {
-    performEditAction(text, editCode, query).then(async (r) => {
+  const editNote = () => {
+    performEditAction(
+      previewAreaContent,
+      editCodeTextAreaRef.current?.value ?? '',
+      query
+    ).then(async (r) => {
       const res = await r.json();
 
       if (!r.ok) {
@@ -133,12 +144,18 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
           <div
             className={`flex flex-col py-4 px-4 bg-button-bg text-color-text h-[48rem] mb-2 break-words`}
           >
-            <h1>Guide coming soon!</h1>
-            <p>
-              {' '}
-              I still need to write a whole guide in markdown. It&apos;s 12am
-              and i&apos;m a little lazy.
-            </p>
+            <ReactMarkdown
+              children="TBA"
+              remarkPlugins={[
+                remarkGfm,
+                remarkEmoji,
+                remarkParse,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                remarkRehype,
+                remarkSqueezeParagraphs,
+              ]}
+            />
           </div>
         )}
         {editMode && (
@@ -152,19 +169,9 @@ export const SubmitPage = ({ editMode = false, ...props }) => {
         )}
         <div className={`float-right`}>
           {editMode ? (
-            <Button
-              onClick={() =>
-                editNote(
-                  previewAreaContent,
-                  editCodeTextAreaRef.current?.value ?? '',
-                  query
-                )
-              }
-            >
-              Submit edit
-            </Button>
+            <Button onClick={editNote}>Submit edit</Button>
           ) : (
-            <Button onClick={() => saveNote(previewAreaContent)}>Submit</Button>
+            <Button onClick={saveNote}>Submit</Button>
           )}
         </div>
 
